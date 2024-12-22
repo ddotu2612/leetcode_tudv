@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool check_sudoku(vector<char>& v, int e) {
+        if (v[e] == '.')
+            return true;
+        for (int i = 0; i < 81; i++) {
+            if (i == e)
+                continue;
+            int x1 = e / 9;
+            int x2 = i / 9;
+            int y1 = e % 9;
+            int y2 = i % 9;
+            if ((x1 == x2 || y1 == y2) && v[e] == v[i])
+                return false;
+            int x3 = x1 / 3;
+            int x4 = x2 / 3;
+            int y3 = y1 / 3;
+            int y4 = y2 / 3;
+            if (x3 == x4 && y3 == y4 && v[e] == v[i])
+                return false;
+        }
+        return true;
+    }
+    bool isValidSudoku(vector<vector<char>>& board) {
+        vector<char> v(81);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                v[i * 9 + j] = board[i][j];
+            }
+        }
+        for (int i = 0; i < 81; i++) {
+            if (!check_sudoku(v, i))
+                return false;
+        }
+        return true;
+    }
+};
